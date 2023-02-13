@@ -17,7 +17,9 @@
       },
       "block_order": [
         "announcement-bar-0"
-      ]
+      ],
+      "settings": {
+      }
     },
     "header": {
       "type": "header",
@@ -26,7 +28,6 @@
         "logo_position": "middle-left",
         "menu": "main-menu",
         "menu_type_desktop": "dropdown",
-        "sticky_header_type": "on-scroll-up",
         "show_line_separator": true,
         "mobile_logo_position": "center",
         "margin_bottom": 0,
