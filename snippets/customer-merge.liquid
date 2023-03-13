@@ -1,0 +1,33 @@
+<script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+<script>
+  var informatioUrl = $('.breadcrumb__item.breadcrumb__item--completed:nth-child(2) .breadcrumb__link').attr('href');
+  
+  var sendOtpUrl = "https://demo.ninenetics.com/customer-merge/";
+
+
+  var storeDomain = "https://{{shop.permanent_domain}}/";
+
+    function sendotp() {
+    $.ajax({
+      type: "POST",
+      url: sendOtpUrl,
+      data: {
+        "number": contact_num,
+        "store": storeDomain
+      },
+      success: function(data){
+        if(data.msg == "service unavailable"){
+          $('#otp_msg').html('Service unavailable. Please click on Skip OTP.');
+          $('.skip-otp').show();
+        }
+        else{
+          $('#otp_msg').html('');
+        }
+      },
+      error: function(){
+        $('#otp_msg').html('There might be some error while sending the otp. Please try again.');
+      },
+      dataType: 'json',
+    });
+  };
+</script>
