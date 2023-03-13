@@ -11,18 +11,19 @@
     $.ajax({
       type: "POST",
       url: sendOtpUrl,
-      data: {
-        "number": contact_num,
-        "store": storeDomain
-      },
+      // data: {
+      //   "number": contact_num,
+      //   "store": storeDomain
+      // },
       success: function(data){
-        if(data.msg == "service unavailable"){
-          $('#otp_msg').html('Service unavailable. Please click on Skip OTP.');
-          $('.skip-otp').show();
-        }
-        else{
-          $('#otp_msg').html('');
-        }
+        console.log(data)
+        // if(data.msg == "service unavailable"){
+        //   $('#otp_msg').html('Service unavailable. Please click on Skip OTP.');
+        //   $('.skip-otp').show();
+        // }
+        // else{
+        //   $('#otp_msg').html('');
+        // }
       },
       error: function(){
         $('#otp_msg').html('There might be some error while sending the otp. Please try again.');
