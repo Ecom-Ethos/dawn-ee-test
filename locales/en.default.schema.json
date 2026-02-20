@@ -2861,6 +2861,48 @@
         "name": "Video"
       }
     },
+    "shoppable_video": {
+      "name": "Shoppable video",
+      "settings": {
+        "heading": {
+          "label": "Heading"
+        },
+        "header_video": {
+          "content": "Video"
+        },
+        "video": {
+          "label": "Shopify-hosted video"
+        },
+        "video_url": {
+          "label": "Video URL",
+          "placeholder": "Use a YouTube or Vimeo URL",
+          "info": "Used if no Shopify-hosted video is selected. Video autoplays muted."
+        },
+        "cover_image": {
+          "label": "Cover image"
+        },
+        "description": {
+          "label": "Video alt text",
+          "info": "Describe the video for customers using screen readers."
+        }
+      },
+      "blocks": {
+        "product": {
+          "name": "Product",
+          "settings": {
+            "product": {
+              "label": "Product"
+            },
+            "button_label": {
+              "label": "Button label"
+            }
+          }
+        }
+      },
+      "presets": {
+        "name": "Shoppable video"
+      }
+    },
     "slideshow": {
       "name": "Slideshow",
       "settings": {

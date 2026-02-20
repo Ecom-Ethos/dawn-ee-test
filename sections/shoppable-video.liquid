@@ -1,0 +1,297 @@
+{{ 'section-shoppable-video.css' | asset_url | stylesheet_tag }}
+{{ 'component-price.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<div class="color-{{ section.settings.color_scheme }} gradient">
+  <div class="page-width section-{{ section.id }}-padding">
+
+    {%- unless section.settings.heading == blank -%}
+      <div class="title-wrapper title-wrapper--no-top-margin">
+        <h2 class="title {{ section.settings.heading_size }}">{{ section.settings.heading | escape }}</h2>
+      </div>
+    {%- endunless -%}
+
+    <div class="shoppable-video">
+
+      {%- comment -%} ── VIDEO COLUMN ── {%- endcomment -%}
+      <div class="shoppable-video__video-wrapper">
+        {%- liquid
+          assign shopify_video_set = false
+          assign external_video_set = false
+          if section.settings.video != blank
+            assign shopify_video_set = true
+          elsif section.settings.video_url != blank
+            assign external_video_set = true
+          endif
+        -%}
+
+        {%- if shopify_video_set -%}
+          {%- comment -%} Shopify-hosted video: autoplay natively with muted attribute {%- endcomment -%}
+          <div class="shoppable-video__media">
+            <video
+              autoplay
+              muted
+              loop
+              playsinline
+              {% if section.settings.cover_image != blank %}
+                poster="{{ section.settings.cover_image | image_url: width: 1920 }}"
+              {% endif %}
+              aria-label="{{ section.settings.description | escape }}"
+            >
+              {%- for source in section.settings.video.sources -%}
+                <source src="{{ source.url }}" type="{{ source.mime_type }}">
+              {%- endfor -%}
+            </video>
+          </div>
+
+        {%- elsif external_video_set -%}
+          {%- comment -%} YouTube or Vimeo iframe with autoplay + mute params {%- endcomment -%}
+          <div class="shoppable-video__media shoppable-video__media--iframe">
+            {%- if section.settings.video_url.type == 'youtube' -%}
+              <iframe
+                src="https://www.youtube.com/embed/{{ section.settings.video_url.id }}?autoplay=1&mute=1&loop=1&playlist={{ section.settings.video_url.id }}&controls=0&rel=0&playsinline=1"
+                class="js-youtube"
+                allow="autoplay; encrypted-media"
+                allowfullscreen
+                title="{{ section.settings.description | escape }}"
+              ></iframe>
+            {%- else -%}
+              <iframe
+                src="https://player.vimeo.com/video/{{ section.settings.video_url.id }}?autoplay=1&muted=1&loop=1&background=1"
+                class="js-vimeo"
+                allow="autoplay; encrypted-media"
+                allowfullscreen
+                title="{{ section.settings.description | escape }}"
+              ></iframe>
+            {%- endif -%}
+          </div>
+
+        {%- else -%}
+          {%- comment -%} Placeholder when no video is set {%- endcomment -%}
+          <div class="shoppable-video__media shoppable-video__media--placeholder">
+            {{ 'collection-2' | placeholder_svg_tag: 'placeholder-svg placeholder' }}
+          </div>
+        {%- endif -%}
+      </div>
+
+      {%- comment -%} ── PRODUCTS COLUMN ── {%- endcomment -%}
+      {%- if section.blocks.size > 0 -%}
+        <div class="shoppable-video__products">
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'product' -%}
+              {%- assign featured_product = block.settings.product -%}
+              {%- assign btn_label = block.settings.button_label -%}
+
+              <a
+                href="{{ featured_product.url }}"
+                class="shoppable-video__product-card"
+                {{ block.shopify_attributes }}
+                {% if featured_product == blank %}aria-disabled="true" tabindex="-1"{% endif %}
+              >
+                <div class="shoppable-video__product-image">
+                  {%- if featured_product != blank and featured_product.featured_media != blank -%}
+                    {{
+                      featured_product.featured_media
+                      | image_url: width: 400
+                      | image_tag:
+                        loading: 'lazy',
+                        widths: '100, 200, 300, 400',
+                        sizes: '(min-width: 750px) 9rem, 15rem',
+                        alt: featured_product.featured_media.alt | escape
+                    }}
+                  {%- else -%}
+                    {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+                  {%- endif -%}
+                </div>
+
+                <div class="shoppable-video__product-info">
+                  <p class="shoppable-video__product-title">
+                    {%- if featured_product != blank -%}
+                      {{ featured_product.title | escape }}
+                    {%- else -%}
+                      {{ 'onboarding.product_title' | t }}
+                    {%- endif -%}
+                  </p>
+
+                  {%- if featured_product != blank -%}
+                    <div class="shoppable-video__product-price">
+                      {%- render 'price', product: featured_product -%}
+                    </div>
+                  {%- endif -%}
+
+                  {%- unless btn_label == blank -%}
+                    <span class="shoppable-video__product-cta">
+                      {{ btn_label | escape }}
+                    </span>
+                  {%- endunless -%}
+                </div>
+              </a>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "t:sections.shoppable_video.name",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "default": "Shop the video",
+      "label": "t:sections.shoppable_video.settings.heading.label"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "options": [
+        {
+          "value": "h2",
+          "label": "t:sections.all.heading_size.options__1.label"
+        },
+        {
+          "value": "h1",
+          "label": "t:sections.all.heading_size.options__2.label"
+        },
+        {
+          "value": "h0",
+          "label": "t:sections.all.heading_size.options__3.label"
+        }
+      ],
+      "default": "h1",
+      "label": "t:sections.all.heading_size.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.shoppable_video.settings.header_video.content"
+    },
+    {
+      "type": "video",
+      "id": "video",
+      "label": "t:sections.shoppable_video.settings.video.label"
+    },
+    {
+      "type": "video_url",
+      "id": "video_url",
+      "accept": ["youtube", "vimeo"],
+      "label": "t:sections.shoppable_video.settings.video_url.label",
+      "placeholder": "t:sections.shoppable_video.settings.video_url.placeholder",
+      "info": "t:sections.shoppable_video.settings.video_url.info"
+    },
+    {
+      "type": "image_picker",
+      "id": "cover_image",
+      "label": "t:sections.shoppable_video.settings.cover_image.label"
+    },
+    {
+      "type": "text",
+      "id": "description",
+      "label": "t:sections.shoppable_video.settings.description.label",
+      "info": "t:sections.shoppable_video.settings.description.info"
+    },
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "options": [
+        {
+          "value": "accent-1",
+          "label": "t:sections.all.colors.accent_1.label"
+        },
+        {
+          "value": "accent-2",
+          "label": "t:sections.all.colors.accent_2.label"
+        },
+        {
+          "value": "background-1",
+          "label": "t:sections.all.colors.background_1.label"
+        },
+        {
+          "value": "background-2",
+          "label": "t:sections.all.colors.background_2.label"
+        },
+        {
+          "value": "inverse",
+          "label": "t:sections.all.colors.inverse.label"
+        }
+      ],
+      "default": "background-1",
+      "label": "t:sections.all.colors.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.padding.section_padding_heading"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 36
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product",
+      "name": "t:sections.shoppable_video.blocks.product.name",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "t:sections.shoppable_video.blocks.product.settings.product.label"
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "default": "Shop now",
+          "label": "t:sections.shoppable_video.blocks.product.settings.button_label.label"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.shoppable_video.presets.name",
+      "blocks": [
+        { "type": "product" },
+        { "type": "product" },
+        { "type": "product" }
+      ]
+    }
+  ]
+}
+{% endschema %}
