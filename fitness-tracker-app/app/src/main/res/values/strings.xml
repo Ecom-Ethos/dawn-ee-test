@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">FitTrack Pro</string>
+
+    <!-- Navigation -->
+    <string name="nav_clients">Clients</string>
+    <string name="nav_sessions">Sessions</string>
+    <string name="nav_measurements">Measurements</string>
+
+    <!-- Client -->
+    <string name="clients">Clients</string>
+    <string name="add_client">Add Client</string>
+    <string name="edit_client">Edit Client</string>
+    <string name="client_name">Full Name</string>
+    <string name="client_age">Age</string>
+    <string name="client_gender">Gender</string>
+    <string name="client_phone">Phone Number</string>
+    <string name="client_email">Email Address</string>
+    <string name="client_goal">Fitness Goal</string>
+    <string name="no_clients">No clients yet.\nTap + to add your first client.</string>
+    <string name="delete_client_confirm">Delete this client? All sessions and measurements will be removed.</string>
+
+    <!-- Measurement -->
+    <string name="measurements">Measurements</string>
+    <string name="add_measurement">Add Measurement</string>
+    <string name="edit_measurement">Edit Measurement</string>
+    <string name="measurement_date">Measurement Date</string>
+    <string name="weight_kg">Weight (kg)</string>
+    <string name="height_cm">Height (cm)</string>
+    <string name="chest_cm">Chest (cm)</string>
+    <string name="waist_cm">Waist (cm)</string>
+    <string name="hips_cm">Hips (cm)</string>
+    <string name="left_bicep_cm">Left Bicep (cm)</string>
+    <string name="right_bicep_cm">Right Bicep (cm)</string>
+    <string name="left_thigh_cm">Left Thigh (cm)</string>
+    <string name="right_thigh_cm">Right Thigh (cm)</string>
+    <string name="left_calf_cm">Left Calf (cm)</string>
+    <string name="right_calf_cm">Right Calf (cm)</string>
+    <string name="body_fat_percent">Body Fat (%)</string>
+    <string name="notes">Notes</string>
+    <string name="no_measurements">No measurements recorded yet.</string>
+
+    <!-- Session -->
+    <string name="sessions">Training Sessions</string>
+    <string name="add_session">Add Session</string>
+    <string name="edit_session">Edit Session</string>
+    <string name="session_date">Session Date</string>
+    <string name="body_part">Body Part Focus</string>
+    <string name="duration_minutes">Duration (minutes)</string>
+    <string name="exercises">Exercises</string>
+    <string name="add_exercise">Add Exercise</string>
+    <string name="no_sessions">No training sessions yet.</string>
+    <string name="no_exercises">No exercises added. Tap + to add exercises.</string>
+
+    <!-- Exercise -->
+    <string name="exercise_name">Exercise Name</string>
+    <string name="sets">Sets</string>
+    <string name="reps">Reps</string>
+    <string name="weight_kg_short">Weight (kg)</string>
+    <string name="bodyweight">Bodyweight</string>
+
+    <!-- Body Parts -->
+    <string-array name="body_parts">
+        <item>Chest</item>
+        <item>Back</item>
+        <item>Legs</item>
+        <item>Shoulders</item>
+        <item>Arms</item>
+        <item>Core</item>
+        <item>Full Body</item>
+        <item>Cardio</item>
+    </string-array>
+
+    <!-- Genders -->
+    <string-array name="genders">
+        <item>Male</item>
+        <item>Female</item>
+        <item>Other</item>
+    </string-array>
+
+    <!-- Goals -->
+    <string-array name="fitness_goals">
+        <item>Weight Loss</item>
+        <item>Muscle Gain</item>
+        <item>Endurance</item>
+        <item>Flexibility</item>
+        <item>General Fitness</item>
+        <item>Sports Performance</item>
+        <item>Rehabilitation</item>
+    </string-array>
+
+    <!-- Common -->
+    <string name="save">Save</string>
+    <string name="cancel">Cancel</string>
+    <string name="delete">Delete</string>
+    <string name="edit">Edit</string>
+    <string name="back">Back</string>
+    <string name="confirm">Confirm</string>
+    <string name="search_clients">Search clients…</string>
+    <string name="total_sessions">Total Sessions</string>
+    <string name="last_session">Last Session</string>
+    <string name="never">Never</string>
+    <string name="kg">kg</string>
+    <string name="cm">cm</string>
+    <string name="bmi">BMI</string>
+    <string name="client_details">Client Details</string>
+</resources>

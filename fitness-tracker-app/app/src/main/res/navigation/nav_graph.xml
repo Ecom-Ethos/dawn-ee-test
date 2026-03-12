@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/clientListFragment">
+
+    <!-- ─── Client List ──────────────────────────────────────────── -->
+    <fragment
+        android:id="@+id/clientListFragment"
+        android:name="com.fitnesstracker.ui.clients.ClientListFragment"
+        android:label="Clients"
+        tools:layout="@layout/fragment_client_list">
+
+        <action
+            android:id="@+id/action_clientList_to_addClient"
+            app:destination="@id/addEditClientFragment" />
+
+        <action
+            android:id="@+id/action_clientList_to_clientDetail"
+            app:destination="@id/clientDetailFragment" />
+    </fragment>
+
+    <!-- ─── Add / Edit Client ─────────────────────────────────────── -->
+    <fragment
+        android:id="@+id/addEditClientFragment"
+        android:name="com.fitnesstracker.ui.clients.AddEditClientFragment"
+        android:label="Add Client"
+        tools:layout="@layout/fragment_add_edit_client">
+
+        <argument
+            android:name="clientId"
+            android:defaultValue="-1"
+            app:argType="long" />
+    </fragment>
+
+    <!-- ─── Client Detail ─────────────────────────────────────────── -->
+    <fragment
+        android:id="@+id/clientDetailFragment"
+        android:name="com.fitnesstracker.ui.clients.ClientDetailFragment"
+        android:label="Client"
+        tools:layout="@layout/fragment_client_detail">
+
+        <argument
+            android:name="clientId"
+            app:argType="long" />
+
+        <action
+            android:id="@+id/action_clientDetail_to_editClient"
+            app:destination="@id/addEditClientFragment" />
+
+        <action
+            android:id="@+id/action_clientDetail_to_addMeasurement"
+            app:destination="@id/addEditMeasurementFragment" />
+
+        <action
+            android:id="@+id/action_clientDetail_to_addSession"
+            app:destination="@id/addEditSessionFragment" />
+
+        <action
+            android:id="@+id/action_clientDetail_to_sessionDetail"
+            app:destination="@id/sessionDetailFragment" />
+    </fragment>
+
+    <!-- ─── Add / Edit Measurement ───────────────────────────────── -->
+    <fragment
+        android:id="@+id/addEditMeasurementFragment"
+        android:name="com.fitnesstracker.ui.measurements.AddEditMeasurementFragment"
+        android:label="Measurement"
+        tools:layout="@layout/fragment_add_edit_measurement">
+
+        <argument
+            android:name="clientId"
+            app:argType="long" />
+
+        <argument
+            android:name="measurementId"
+            android:defaultValue="-1"
+            app:argType="long" />
+    </fragment>
+
+    <!-- ─── Add / Edit Session ───────────────────────────────────── -->
+    <fragment
+        android:id="@+id/addEditSessionFragment"
+        android:name="com.fitnesstracker.ui.sessions.AddEditSessionFragment"
+        android:label="Session"
+        tools:layout="@layout/fragment_add_edit_session">
+
+        <argument
+            android:name="clientId"
+            app:argType="long" />
+
+        <argument
+            android:name="sessionId"
+            android:defaultValue="-1"
+            app:argType="long" />
+    </fragment>
+
+    <!-- ─── Session Detail ───────────────────────────────────────── -->
+    <fragment
+        android:id="@+id/sessionDetailFragment"
+        android:name="com.fitnesstracker.ui.sessions.SessionDetailFragment"
+        android:label="Session Detail"
+        tools:layout="@layout/fragment_session_detail">
+
+        <argument
+            android:name="sessionId"
+            app:argType="long" />
+
+        <argument
+            android:name="clientId"
+            app:argType="long" />
+
+        <action
+            android:id="@+id/action_sessionDetail_to_editSession"
+            app:destination="@id/addEditSessionFragment" />
+    </fragment>
+
+</navigation>
