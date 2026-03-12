@@ -21,7 +21,6 @@ import com.fitnesstracker.ui.measurements.MeasurementViewModelFactory
 import com.fitnesstracker.ui.sessions.SessionAdapter
 import com.fitnesstracker.ui.sessions.SessionViewModel
 import com.fitnesstracker.ui.sessions.SessionViewModelFactory
-import com.fitnesstracker.utils.DateUtils
 import kotlinx.coroutines.launch
 
 class ClientDetailFragment : Fragment() {
@@ -148,8 +147,6 @@ class ClientDetailFragment : Fragment() {
     }
 
     private fun setupObservers() {
-        val repo = (requireActivity().application as FitnessTrackerApp).repository
-
         clientViewModel.getClientById(args.clientId).observe(viewLifecycleOwner) { client ->
             if (client == null) return@observe
             requireActivity().title = client.name
@@ -161,11 +158,8 @@ class ClientDetailFragment : Fragment() {
 
         sessionViewModel.sessions.observe(viewLifecycleOwner) { sessions ->
             sessionAdapter.submitList(sessions)
-            if (currentTab == 0) refreshSessionsEmpty()
-        }
-
-        sessionViewModel.sessions.observe(viewLifecycleOwner) { sessions ->
             binding.tvSessionCount.text = sessions.size.toString()
+            if (currentTab == 0) refreshSessionsEmpty()
         }
 
         measurementViewModel.measurements.observe(viewLifecycleOwner) { measurements ->
